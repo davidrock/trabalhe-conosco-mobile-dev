@@ -20,7 +20,7 @@ class NewCreditCardPresenter : BasePresenter<NewCreditCardMvpView>() {
             box.put(cc)
 
             if(cc.Id > 0 ){
-                mvpView?.showSuccessDialog("Cartão cadastrado com sucesso!")
+                mvpView?.showSuccessDialog(DavidRockPicPayApplication.instance.getString(R.string.add_creditard_sucess))
             }
 
             CreditCard().setDefaultCard(cc)

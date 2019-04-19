@@ -100,8 +100,7 @@ class SendMoneyActivity : BaseActivity(), SendMoneyMvpView {
 
                 var card = CreditCard().getDefaultCard()
 
-                val nf = DecimalFormat("#,###.00")
-                var valor = nf.parse(edValor.text.toString().removePrefix("R$")).toDouble()
+                var valor = presenter.convertMoneyValue(edValor.text.toString())
 
                 if (card != null) {
                     var model = TransactionModel(

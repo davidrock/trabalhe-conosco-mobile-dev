@@ -10,6 +10,9 @@ import io.objectbox.kotlin.boxFor
 import com.picpay.david.davidrockpicpay.models.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_send_money.*
+import java.text.DecimalFormat
+import java.text.ParseException
 
 
 class SendMoneyPresenter : BasePresenter<SendMoneyMvpView>() {
@@ -21,7 +24,21 @@ class SendMoneyPresenter : BasePresenter<SendMoneyMvpView>() {
         mvpView?.updateCreditCardSection()
     }
 
-    fun sendMoney(model: TransactionModel){
+    fun convertMoneyValue(value: String): Double? {
+        val nf = DecimalFormat("#,###.00")
+
+        return try {
+            var valor = nf.parse(value.removePrefix("R$").removePrefix("$")).toDouble()
+            valor
+        } catch (ex: ParseException) {
+            mvpView?.showError("Valor inválido")
+            null
+        }
+
+
+    }
+
+    fun sendMoney(model: TransactionModel) {
         checkViewAttached()
 
         model.CardNumber = model.CardNumber?.replace(" ", "")
